@@ -17,8 +17,19 @@ public class SocialMediaController {
     public Javalin startAPI() {
         Javalin app = Javalin.create();
         app.get("example-endpoint", this::exampleHandler);
+        private void handleMessage(Context context){
+            context.json("Handler");
+        }
+       app.post("localhost8080/register", this::handleMessage(Register));
+        app.post("localhost8080/login", this::handleMessage(Login));
+        app.post("localhost8080/messages",this::handleMessage(Message));
+        app.get("localhost8080/messages",this::handleMessage(Message));
+        app.get("localhost8080/messages",this::handleMessage(Message_Id));
+        app.delete("localhost8080/messages", this::handleMessage(Message_Id));
+        app.patch("localhost8080/messages",this::handleMessage(Message_Id));
 
-        return app;
+
+        return app; 
     }
 
     /**
