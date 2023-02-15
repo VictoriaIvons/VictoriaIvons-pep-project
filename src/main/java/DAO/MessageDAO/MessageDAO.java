@@ -87,13 +87,13 @@ public class MessageDAO {
         return null;
        
     }
-    public List<Message> getMessageByAccountId(int message_id,int account_id){
+    public List<Message> getMessageByAccountId(int account_id){
         Connection connection=ConnectionUtil.getConnection();
         try{
-            String sql="select from message where message_id=? and account_id=?";
+            String sql="select * from message where account_id=?";
             PreparedStatement preparedStatement=connection.prepareStatement(sql);
-       preparedStatement.setInt(1,message_id);
-       preparedStatement.setInt(2,account_id);
+     
+       preparedStatement.setInt(1,account_id);
             ResultSet rs=preparedStatement.executeQuery();
             List<Message>messagelist=new ArrayList<>();
             while(rs.next()){

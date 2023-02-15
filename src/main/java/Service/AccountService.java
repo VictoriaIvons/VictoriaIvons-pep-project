@@ -19,16 +19,19 @@ public List<Account>getAllAccounts(){
 }
 public Account CreateNewUsers(Account account){
     Account accountfromDb=this.accountDAO.getAccountByUserName(account.getUsername());
-   if(account.getPassword().length()<4 &&account.username!="")return null;
-    if(accountfromDb!=null ||account.getUsername().isBlank())return null;
-    return this.accountDAO.createNewUsers(account);
+    if(accountfromDb!=null)return null;
+    if(account.getPassword().length()<=4 && account.getUsername().isBlank()){
+        return null;
+    }else{
+        return this.accountDAO.createNewUsers(account);
+    }
+    
    }
    
 
-public Account retrieveId(int account_id) {
+public Account retrieveId(String username, String password) {
     
-    
-   return this.accountDAO.retrieveId(account_id);
+   return this.accountDAO.retrieveId(username,password);
 }
 }
 

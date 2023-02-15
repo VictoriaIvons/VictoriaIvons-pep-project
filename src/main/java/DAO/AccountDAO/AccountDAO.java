@@ -51,12 +51,13 @@ public Account createNewUsers(Account account){
     }
     return null;
 }
-public Account retrieveId(int account_id) {
+public Account retrieveId(String username,String password ) {
     Connection connection=ConnectionUtil.getConnection();
     try{
-        String sql="select from account where account_id=? ";
+        String sql="select * from account where username=? && password=? ";
         PreparedStatement preparedStatement=connection.prepareStatement(sql);
-   preparedStatement.setInt(1,account_id);
+   preparedStatement.setString(1,username);
+   preparedStatement.setString(2,password);
         ResultSet rs=preparedStatement.executeQuery();
         while(rs.next()){
             Account account=new Account(rs.getInt("account_id"),
@@ -72,7 +73,7 @@ return null;
 public Account getAccountByUserName(String username) {
     Connection connection=ConnectionUtil.getConnection();
     try{
-        String sql="select from account where username=?";
+        String sql="select * from account where username=?";
         PreparedStatement preparedStatement=connection.prepareStatement(sql);
     preparedStatement.setString(1,username);
         ResultSet rs=preparedStatement.executeQuery();

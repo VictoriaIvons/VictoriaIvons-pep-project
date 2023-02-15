@@ -42,7 +42,7 @@ public class SocialMediaController {
         app.get("/messages/{message_id}",this::getMessageByIdHandler);
         app.delete("/messages/{message_id}",this::deleteMessageByIdHandler);
         app.patch("/messages/{message_id}",this::UpdateMessageByIdHandler);
-        app.get("/messages/account_id",this::getMessageByAccountIdHandler);
+        app.get("/messages/{account_id}/messages",this::getMessageByAccountIdHandler);
 
         return app;
     }
@@ -59,11 +59,12 @@ public class SocialMediaController {
     private void postLoginHandler(Context ctx)throws JsonProcessingException{
        ObjectMapper mapper=new ObjectMapper();
        Account account=mapper.readValue(ctx.body(),Account.class);
-       Account postLogin=accountService.retrieveId((account.getAccount_id()));
-       if(postLogin==null||account==null){
+       Account postLogin=accountService.retrieveId("username", "password");
+       if(postLogin!=null){
+        ctx.status(200);
         ctx.json(mapper.writeValueAsString(postLogin));
        }else{
-        ctx.status(400);
+        ctx.status(401);
        }
    }
     private void postCreateMessageHandler(Context ctx)throws JsonProcessingException{
@@ -113,14 +114,13 @@ public class SocialMediaController {
     }
 }
     private void getMessageByAccountIdHandler(Context ctx)throws JsonProcessingException{
-        ObjectMapper mapper=new ObjectMapper();
-        int message_id=Integer.parseInt(ctx.pathParam("message_id"));
+       
         int account_id=Integer.parseInt(ctx.pathParam("account_id"));
-       List<Message> messagelist=messageService.getMessageByAccountId(message_id, account_id);
+       List<Message> messagelist=messageService.getMessageByAccountId(account_id);
        if(messagelist==null){
         ctx.status(200);
-        ctx.json(mapper.writeValueAsString(messagelist));
-       }
+        
+       }ctx.json(messagelist);
     }
     /**
      * This is an example handler for an example endpoint.
