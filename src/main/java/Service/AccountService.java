@@ -18,15 +18,14 @@ public List<Account>getAllAccounts(){
     return accountDAO.getAllAccounts();
 }
 public Account CreateNewUsers(Account account){
-    Account accountfromDb=this.accountDAO.getAccountByUserName(account.getUsername());
-    if(accountfromDb!=null)return null;
-    if(account.getPassword().length()<=4 && account.getUsername().isBlank()){
-        return null;
-    }else{
-        return this.accountDAO.createNewUsers(account);
+    
+    if(account.password.length()>=4 && account.username!=""){
+        return accountDAO.createNewUsers(account);
     }
     
-   }
+        return null ;
+    
+}
    
 
 public Account retrieveId(String username, String password) {

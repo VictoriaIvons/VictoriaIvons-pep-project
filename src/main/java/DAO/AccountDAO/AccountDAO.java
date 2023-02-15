@@ -54,7 +54,7 @@ public Account createNewUsers(Account account){
 public Account retrieveId(String username,String password ) {
     Connection connection=ConnectionUtil.getConnection();
     try{
-        String sql="select * from account where username=? && password=? ";
+        String sql="select * from account where username=? and password=? ";
         PreparedStatement preparedStatement=connection.prepareStatement(sql);
    preparedStatement.setString(1,username);
    preparedStatement.setString(2,password);

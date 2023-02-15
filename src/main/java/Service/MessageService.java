@@ -27,7 +27,7 @@ public Message addMessage(Message message){
 
 
 public Message updateById(Message message, int message_id) {
-     if(messageDAO.getMessageById(message_id)==null){
+     if(messageDAO.getMessageById(message_id)!=null){
         return messageDAO.updateMessageById(message,message_id);
     
      }return null;
@@ -42,8 +42,8 @@ public Message deleteById(int message_id) {
     }
 
 
-public List<Message> getMessageByAccountId(int account_id) {
-    return messageDAO.getMessageByAccountId(account_id);
+public List<Message> getMessageByAccountId(int posted_by) {
+    return messageDAO.getMessageByAccountId(posted_by);
 }
 public Message getMessageById(int message_id) {
     return messageDAO.getMessageById(message_id);

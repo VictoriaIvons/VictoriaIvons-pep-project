@@ -9,9 +9,7 @@
 [INFO] Copying 1 resource
 [INFO] 
 [INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ Challenges ---
-[INFO] Changes detected - recompiling the module!
-[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
-[INFO] Compiling 9 source files to /workspace/VictoriaIvons-pep-project/target/classes
+[INFO] Nothing to compile - all classes are up to date
 [INFO] 
 [INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ Challenges ---
 [WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
@@ -27,17 +25,20 @@
 [INFO]  T E S T S
 [INFO] -------------------------------------------------------
 [INFO] Running AuthIntegrationTest
-Column "account_id" not found [42122-214]
-Unique index or primary key violation: "PUBLIC.CONSTRAINT_INDEX_E ON PUBLIC.ACCOUNT(USERNAME NULLS FIRST) VALUES ( /* 1 */ 'user' )"; SQL statement:
-insert into account(username,password) values(?,?) [23505-214]
-[ERROR] Tests run: 7, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 8.411 s <<< FAILURE! - in AuthIntegrationTest
-[ERROR] AuthIntegrationTest.postRegisterThenPostIncorrectLoginTest  Time elapsed: 2.228 s  <<< FAILURE!
-java.lang.AssertionError: expected:<401> but was:<200>
+Values of types "BOOLEAN" and "CHARACTER VARYING(255)" are not comparable; SQL statement:
+select * from account where username=? && password=? [90110-214]
+Values of types "BOOLEAN" and "CHARACTER VARYING(255)" are not comparable; SQL statement:
+select * from account where username=? && password=? [90110-214]
+Values of types "BOOLEAN" and "CHARACTER VARYING(255)" are not comparable; SQL statement:
+select * from account where username=? && password=? [90110-214]
+[ERROR] Tests run: 7, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 9.22 s <<< FAILURE! - in AuthIntegrationTest
+[ERROR] AuthIntegrationTest.postRegisterShortPasswordTest  Time elapsed: 1.04 s  <<< FAILURE!
+java.lang.AssertionError: expected:<400> but was:<200>
 	at org.junit.Assert.fail(Assert.java:89)
 	at org.junit.Assert.failNotEquals(Assert.java:835)
 	at org.junit.Assert.assertEquals(Assert.java:647)
 	at org.junit.Assert.assertEquals(Assert.java:633)
-	at AuthIntegrationTest.postRegisterThenPostIncorrectLoginTest(AuthIntegrationTest.java:207)
+	at AuthIntegrationTest.postRegisterShortPasswordTest(AuthIntegrationTest.java:118)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -80,13 +81,13 @@ java.lang.AssertionError: expected:<401> but was:<200>
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:595)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:581)
 
-[ERROR] AuthIntegrationTest.postLoginEmptyTest  Time elapsed: 1.025 s  <<< FAILURE!
-java.lang.AssertionError: expected:<401> but was:<200>
+[ERROR] AuthIntegrationTest.postRegisterBlankUsernameTest  Time elapsed: 1.031 s  <<< FAILURE!
+java.lang.AssertionError: expected:<400> but was:<200>
 	at org.junit.Assert.fail(Assert.java:89)
 	at org.junit.Assert.failNotEquals(Assert.java:835)
 	at org.junit.Assert.assertEquals(Assert.java:647)
 	at org.junit.Assert.assertEquals(Assert.java:633)
-	at AuthIntegrationTest.postLoginEmptyTest(AuthIntegrationTest.java:161)
+	at AuthIntegrationTest.postRegisterBlankUsernameTest(AuthIntegrationTest.java:97)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -129,13 +130,13 @@ java.lang.AssertionError: expected:<401> but was:<200>
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:595)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:581)
 
-[ERROR] AuthIntegrationTest.postRegisterThenPostLoginTest  Time elapsed: 1.038 s  <<< FAILURE!
-java.lang.AssertionError: expected:<Account{account_id=1, username='user', password='password'}> but was:<null>
+[ERROR] AuthIntegrationTest.postRegisterThenPostLoginTest  Time elapsed: 1.043 s  <<< FAILURE!
+java.lang.AssertionError: expected:<200> but was:<401>
 	at org.junit.Assert.fail(Assert.java:89)
 	at org.junit.Assert.failNotEquals(Assert.java:835)
-	at org.junit.Assert.assertEquals(Assert.java:120)
-	at org.junit.Assert.assertEquals(Assert.java:146)
-	at AuthIntegrationTest.postRegisterThenPostLoginTest(AuthIntegrationTest.java:186)
+	at org.junit.Assert.assertEquals(Assert.java:647)
+	at org.junit.Assert.assertEquals(Assert.java:633)
+	at AuthIntegrationTest.postRegisterThenPostLoginTest(AuthIntegrationTest.java:182)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -183,10 +184,8 @@ Referential integrity constraint violation: "CONSTRAINT_63: PUBLIC.MESSAGE FOREI
 insert into message (posted_by,message_text,time_posted_epoch) values(?,?,?) [23506-214]
 Value too long for column "MESSAGE_TEXT CHARACTER VARYING(255)": "'Over 255 characters                 Over 255 characters Over 255 characters Ove... (383)"; SQL statement:
 insert into message (posted_by,message_text,time_posted_epoch) values(?,?,?) [22001-214]
-Value too long for column "MESSAGE_TEXT CHARACTER VARYING(255)": "'Over 255 characters                 Over 255 characters Over 255 characters Ove... (383)"; SQL statement:
-update message set message_text=? where message_id=? [22001-214]
-[ERROR] Tests run: 20, Failures: 3, Errors: 2, Skipped: 0, Time elapsed: 20.59 s <<< FAILURE! - in MessagingIntegrationTest
-[ERROR] MessagingIntegrationTest.postAccountAndMessageThenGetMessageTest  Time elapsed: 1.019 s  <<< ERROR!
+[ERROR] Tests run: 20, Failures: 4, Errors: 1, Skipped: 0, Time elapsed: 20.742 s <<< FAILURE! - in MessagingIntegrationTest
+[ERROR] MessagingIntegrationTest.postAccountAndMessageThenGetMessageTest  Time elapsed: 1.029 s  <<< ERROR!
 com.fasterxml.jackson.databind.exc.MismatchedInputException: 
 Cannot construct instance of `Model.Message` (although at least one Creator exists): no int/Int-argument constructor/factory method to deserialize from Number value (1)
  at [Source: (String)"1"; line: 1, column: 1]
@@ -245,13 +244,13 @@ Cannot construct instance of `Model.Message` (although at least one Creator exis
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:595)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:581)
 
-[ERROR] MessagingIntegrationTest.postAccountAndBlankMessage  Time elapsed: 1.033 s  <<< FAILURE!
-java.lang.AssertionError: expected:<400> but was:<200>
+[ERROR] MessagingIntegrationTest.patchMessageTest  Time elapsed: 1.04 s  <<< FAILURE!
+java.lang.AssertionError: expected:<200> but was:<400>
 	at org.junit.Assert.fail(Assert.java:89)
 	at org.junit.Assert.failNotEquals(Assert.java:835)
 	at org.junit.Assert.assertEquals(Assert.java:647)
 	at org.junit.Assert.assertEquals(Assert.java:633)
-	at MessagingIntegrationTest.postAccountAndBlankMessage(MessagingIntegrationTest.java:196)
+	at MessagingIntegrationTest.patchMessageTest(MessagingIntegrationTest.java:475)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -294,7 +293,7 @@ java.lang.AssertionError: expected:<400> but was:<200>
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:595)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:581)
 
-[ERROR] MessagingIntegrationTest.postManyAccountsAndMessagesThenGetMessagesByAccountIdTest  Time elapsed: 1.047 s  <<< FAILURE!
+[ERROR] MessagingIntegrationTest.postManyAccountsAndMessagesThenGetMessagesByAccountIdTest  Time elapsed: 1.064 s  <<< FAILURE!
 java.lang.AssertionError: expected:<200> but was:<404>
 	at org.junit.Assert.fail(Assert.java:89)
 	at org.junit.Assert.failNotEquals(Assert.java:835)
@@ -343,23 +342,14 @@ java.lang.AssertionError: expected:<200> but was:<404>
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:595)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:581)
 
-[ERROR] MessagingIntegrationTest.getMessageAfterPatchTest  Time elapsed: 1.037 s  <<< ERROR!
-com.fasterxml.jackson.databind.exc.MismatchedInputException: 
-Cannot construct instance of `Model.Message` (although at least one Creator exists): no int/Int-argument constructor/factory method to deserialize from Number value (1)
- at [Source: (String)"1"; line: 1, column: 1]
-	at com.fasterxml.jackson.databind.exc.MismatchedInputException.from(MismatchedInputException.java:63)
-	at com.fasterxml.jackson.databind.DeserializationContext.reportInputMismatch(DeserializationContext.java:1733)
-	at com.fasterxml.jackson.databind.DeserializationContext.handleMissingInstantiator(DeserializationContext.java:1358)
-	at com.fasterxml.jackson.databind.deser.ValueInstantiator.createFromInt(ValueInstantiator.java:324)
-	at com.fasterxml.jackson.databind.deser.std.StdValueInstantiator.createFromInt(StdValueInstantiator.java:376)
-	at com.fasterxml.jackson.databind.deser.BeanDeserializerBase.deserializeFromNumber(BeanDeserializerBase.java:1447)
-	at com.fasterxml.jackson.databind.deser.BeanDeserializer._deserializeOther(BeanDeserializer.java:199)
-	at com.fasterxml.jackson.databind.deser.BeanDeserializer.deserialize(BeanDeserializer.java:187)
-	at com.fasterxml.jackson.databind.deser.DefaultDeserializationContext.readRootValue(DefaultDeserializationContext.java:323)
-	at com.fasterxml.jackson.databind.ObjectMapper._readMapAndClose(ObjectMapper.java:4697)
-	at com.fasterxml.jackson.databind.ObjectMapper.readValue(ObjectMapper.java:3652)
-	at com.fasterxml.jackson.databind.ObjectMapper.readValue(ObjectMapper.java:3620)
-	at MessagingIntegrationTest.getMessageAfterPatchTest(MessagingIntegrationTest.java:499)
+[ERROR] MessagingIntegrationTest.getMessageAfterPatchTest  Time elapsed: 1.05 s  <<< FAILURE!
+java.lang.AssertionError: expected:<200> but was:<400>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:647)
+	at org.junit.Assert.assertEquals(Assert.java:633)
+	at MessagingIntegrationTest.patchMessageTest(MessagingIntegrationTest.java:475)
+	at MessagingIntegrationTest.getMessageAfterPatchTest(MessagingIntegrationTest.java:490)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -402,7 +392,7 @@ Cannot construct instance of `Model.Message` (although at least one Creator exis
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:595)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:581)
 
-[ERROR] MessagingIntegrationTest.getMessagesByAccountIdEmpty  Time elapsed: 1.018 s  <<< FAILURE!
+[ERROR] MessagingIntegrationTest.getMessagesByAccountIdEmpty  Time elapsed: 1.024 s  <<< FAILURE!
 java.lang.AssertionError: expected:<200> but was:<404>
 	at org.junit.Assert.fail(Assert.java:89)
 	at org.junit.Assert.failNotEquals(Assert.java:835)
@@ -455,25 +445,24 @@ java.lang.AssertionError: expected:<200> but was:<404>
 [INFO] Results:
 [INFO] 
 [ERROR] Failures: 
-[ERROR]   AuthIntegrationTest.postLoginEmptyTest:161 expected:<401> but was:<200>
-[ERROR]   AuthIntegrationTest.postRegisterThenPostIncorrectLoginTest:207 expected:<401> but was:<200>
-[ERROR]   AuthIntegrationTest.postRegisterThenPostLoginTest:186 expected:<Account{account_id=1, username='user', password='password'}> but was:<null>
+[ERROR]   AuthIntegrationTest.postRegisterBlankUsernameTest:97 expected:<400> but was:<200>
+[ERROR]   AuthIntegrationTest.postRegisterShortPasswordTest:118 expected:<400> but was:<200>
+[ERROR]   AuthIntegrationTest.postRegisterThenPostLoginTest:182 expected:<200> but was:<401>
+[ERROR]   MessagingIntegrationTest.getMessageAfterPatchTest:490->patchMessageTest:475 expected:<200> but was:<400>
 [ERROR]   MessagingIntegrationTest.getMessagesByAccountIdEmpty:334 expected:<200> but was:<404>
-[ERROR]   MessagingIntegrationTest.postAccountAndBlankMessage:196 expected:<400> but was:<200>
+[ERROR]   MessagingIntegrationTest.patchMessageTest:475 expected:<200> but was:<400>
 [ERROR]   MessagingIntegrationTest.postManyAccountsAndMessagesThenGetMessagesByAccountIdTest:356 expected:<200> but was:<404>
 [ERROR] Errors: 
-[ERROR]   MessagingIntegrationTest.getMessageAfterPatchTest:499 » MismatchedInput Cannot construct instance of `Model.Message` (although at least one Creator exists): no int/Int-argument constructor/factory method to deserialize from Number value (1)
- at [Source: (String)"1"; line: 1, column: 1]
 [ERROR]   MessagingIntegrationTest.postAccountAndMessageThenGetMessageTest:217 » MismatchedInput Cannot construct instance of `Model.Message` (although at least one Creator exists): no int/Int-argument constructor/factory method to deserialize from Number value (1)
  at [Source: (String)"1"; line: 1, column: 1]
 [INFO] 
-[ERROR] Tests run: 27, Failures: 6, Errors: 2, Skipped: 0
+[ERROR] Tests run: 27, Failures: 7, Errors: 1, Skipped: 0
 [INFO] 
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  34.074 s
-[INFO] Finished at: 2023-02-14T00:00:07Z
+[INFO] Total time:  36.849 s
+[INFO] Finished at: 2023-02-15T01:06:22Z
 [INFO] ------------------------------------------------------------------------
 [ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.0.0-M7:test (default-test) on project Challenges: There are test failures.
 [ERROR] 

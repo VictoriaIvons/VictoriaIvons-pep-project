@@ -87,27 +87,28 @@ public class MessageDAO {
         return null;
        
     }
-    public List<Message> getMessageByAccountId(int account_id){
+    public List<Message> getMessageByAccountId(int posted_by){
         Connection connection=ConnectionUtil.getConnection();
+        List<Message>messagelist=new ArrayList<>();
         try{
-            String sql="select * from message where account_id=?";
+            String sql="select * from message where posted_by=?";
             PreparedStatement preparedStatement=connection.prepareStatement(sql);
-     
-       preparedStatement.setInt(1,account_id);
+           
+       preparedStatement.setInt(1,posted_by);
             ResultSet rs=preparedStatement.executeQuery();
-            List<Message>messagelist=new ArrayList<>();
+           
             while(rs.next()){
                 Message message=new Message(rs.getInt("message_id"),
                             rs.getInt("posted_by"),
                             rs.getString("message_text"),
                             rs.getLong("time_posted_epoch"));
                             messagelist.add(message);
-                        return messagelist;
+                        
             }     
         }catch(SQLException e){
             System.out.println(e.getMessage());
         }
-        return null;
+        return messagelist;
 }  
 public Message deleteMessageById(int message_id){
     Connection connection=ConnectionUtil.getConnection();

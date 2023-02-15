@@ -59,9 +59,9 @@ public class SocialMediaController {
     private void postLoginHandler(Context ctx)throws JsonProcessingException{
        ObjectMapper mapper=new ObjectMapper();
        Account account=mapper.readValue(ctx.body(),Account.class);
-       Account postLogin=accountService.retrieveId("username", "password");
+       Account postLogin=accountService.retrieveId(account.getUsername(), account.getPassword());
        if(postLogin!=null){
-        ctx.status(200);
+     
         ctx.json(mapper.writeValueAsString(postLogin));
        }else{
         ctx.status(401);
@@ -96,7 +96,7 @@ public class SocialMediaController {
         Message message=mapper.readValue(ctx.body(),Message.class);
         int message_id=Integer.parseInt(ctx.pathParam("message_id"));
         Message messages=messageService.updateById(message,message_id);
-        if(messages==null || message.getMessage_text().isBlank()){
+        if(messages==null || message.message_text.isBlank()){
             ctx.status(400);
            
         }else{
@@ -115,12 +115,10 @@ public class SocialMediaController {
 }
     private void getMessageByAccountIdHandler(Context ctx)throws JsonProcessingException{
        
-        int account_id=Integer.parseInt(ctx.pathParam("account_id"));
-       List<Message> messagelist=messageService.getMessageByAccountId(account_id);
-       if(messagelist==null){
-        ctx.status(200);
-        
-       }ctx.json(messagelist);
+        int posted_by=Integer.parseInt(ctx.pathParam("account_id"));
+       List<Message> messagelist=messageService.getMessageByAccountId(posted_by);
+       
+       ctx.json(messagelist);
     }
     /**
      * This is an example handler for an example endpoint.
