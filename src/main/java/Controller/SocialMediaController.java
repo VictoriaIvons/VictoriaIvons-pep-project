@@ -73,7 +73,7 @@ public class SocialMediaController {
        Message addedMessage=messageService.addMessage(message);
        if(addedMessage!=null){
         ctx.json(mapper.writeValueAsString(addedMessage));
-        ctx.status(200);
+        //ctx.status(200);
        }else{
         ctx.status(400);
        }
@@ -83,14 +83,13 @@ public class SocialMediaController {
        ctx.json(messages);
     }
     private void getMessageByIdHandler(Context ctx)throws JsonProcessingException{
-        ObjectMapper mapper=new ObjectMapper();
-        int message_id=Integer.parseInt(ctx.pathParam("message_id"));
-        Message message=messageService.getMessageById(message_id);
-        if(message!=null){
+       //ObjectMapper mapper=new ObjectMapper();
+        Message retreivedMessage = messageService.getMessageById(Integer.parseInt(ctx.pathParam("message_id")));
+               if(retreivedMessage==null){
             ctx.status(200);
-            ctx.json(mapper.writeValueAsString(message_id));
+            return;        
         }
-        ctx.status(200);
+        ctx.json(retreivedMessage);
     }
 
    private void UpdateMessageByIdHandler(Context ctx)throws JsonProcessingException{
@@ -106,26 +105,25 @@ public class SocialMediaController {
         }
     }
     private void deleteMessageByIdHandler(Context ctx)throws JsonProcessingException{
-       int message_id=Integer.parseInt(ctx.pathParam("message_id"));
-       Message message=messageService.deleteById(message_id);
-       if(message!=null){
-        ctx.json(message);
+       Message deleteMessage = messageService.deleteById(Integer.parseInt(ctx.pathParam("message_id")));
+       
+       if(deleteMessage==null){
+        ctx.status(200);
     
     }else{
-        ctx.status(200);
+        
+        ctx.json(deleteMessage);
     }
 }
     private void getMessageByAccountIdHandler(Context ctx)throws JsonProcessingException{
-       
-        int posted_by=Integer.parseInt(ctx.pathParam("account_id"));
-       List<Message> messagelist=messageService.getMessageByAccountId(posted_by);
-     if(messagelist!=null){
+    
+        int account_id = Integer.parseInt(ctx.pathParam("account_id"));
+       List<Message> messagelist=messageService.getMessageByAccountId(account_id);
+     
         ctx.json(messagelist);
-     }else{
-        ctx.status(200);
      }
        
-    }
+    
     /**
      * This is an example handler for an example endpoint.
      * @param context The Javalin Context object manages information about both the HTTP request and response.
