@@ -19,10 +19,12 @@ public List<Message>getAllMessages(){
 }
 public Message addMessage(Message message){
     String message_text=message.getMessage_text();
-    if(!message_text.isBlank()&& messageDAO.getMessageById(message.getMessage_id())==null){
+    if(!message_text.isBlank()&& message_text.length()<255){
         return messageDAO.insertMessage(message);
+    }else{
+        return null;
     }
-    return null;
+    
 }
 
 
