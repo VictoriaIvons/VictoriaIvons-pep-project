@@ -73,6 +73,7 @@ public class SocialMediaController {
        Message addedMessage=messageService.addMessage(message);
        if(addedMessage!=null){
         ctx.json(mapper.writeValueAsString(addedMessage));
+        ctx.status(200);
        }else{
         ctx.status(400);
        }
@@ -89,6 +90,7 @@ public class SocialMediaController {
             ctx.status(200);
             ctx.json(mapper.writeValueAsString(message_id));
         }
+        ctx.status(200);
     }
 
    private void UpdateMessageByIdHandler(Context ctx)throws JsonProcessingException{
@@ -117,8 +119,12 @@ public class SocialMediaController {
        
         int posted_by=Integer.parseInt(ctx.pathParam("account_id"));
        List<Message> messagelist=messageService.getMessageByAccountId(posted_by);
+     if(messagelist!=null){
+        ctx.json(messagelist);
+     }else{
+        ctx.status(200);
+     }
        
-       ctx.json(messagelist);
     }
     /**
      * This is an example handler for an example endpoint.

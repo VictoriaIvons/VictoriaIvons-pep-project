@@ -70,22 +70,4 @@ public Account retrieveId(String username,String password ) {
 }
 return null;
 }
-public Account getAccountByUserName(String username) {
-    Connection connection=ConnectionUtil.getConnection();
-    try{
-        String sql="select * from account where username=?";
-        PreparedStatement preparedStatement=connection.prepareStatement(sql);
-    preparedStatement.setString(1,username);
-        ResultSet rs=preparedStatement.executeQuery();
-        while(rs.next()){
-            Account account=new Account(rs.getInt("account_id"),
-                    rs.getString("username"),
-                    rs.getString("password"));
-                    return account;
-        }
-    }catch(Exception e){
-        System.out.println(e.getMessage());
-    }
-    return null;
-}
 }
